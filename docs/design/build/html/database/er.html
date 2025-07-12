@@ -1,0 +1,467 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>データベース全体ER図 &mdash; 設計書サンプル  ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=c033477b"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=4755f45a"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+      <script type="module">
+mermaid.initialize({
+    startOnLoad: true,
+    theme: 'default',
+    themeVariables: {
+        fontFamily: 'Arial, sans-serif',
+        fontSize: '14px'
+    }
+});
+</script>
+      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+      <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+const load = async () => {
+    await mermaid.run();
+    const all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+    if(mermaids_to_add_zoom > 0) {
+        var svgs = d3.selectAll(".mermaid svg");
+        if(all_mermaids.length !== mermaids_processed.length) {
+            // try again in a sec, wait for mermaids to load
+            setTimeout(load, 200);
+            return;
+        } else if(svgs.size() !== mermaids_to_add_zoom) {
+            // try again in a sec, wait for mermaids to load
+            setTimeout(load, 200);
+            return;
+        } else {
+            svgs.each(function() {
+                var svg = d3.select(this);
+                svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                var inner = svg.select("g");
+                var zoom = d3.zoom().on("zoom", function(event) {
+                    inner.attr("transform", event.transform);
+                });
+                svg.call(zoom);
+            });
+        }
+    }
+};
+
+window.addEventListener("load", load);
+</script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="[ テーブル名 ]" href="template.html" />
+    <link rel="prev" title="データベース設計" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            設計書サンプル
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../project_charter.html">プロジェクト憲章</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id3">サービス・システム名</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id4">ステークホルダー定義</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id5">ビジョン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id14">システム概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id15">システム利用ユーザ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id16">システム化対応範囲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id17">成功の基準</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id21">制約</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id26">投資利益率</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id27">プロジェクト計画</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id28">ユーザーストーリー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id29">業務フロー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id30">ドメインモデル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id31">ユースケース</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id32">機能要求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id33">非機能要求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id34">画面一覧 / 画面遷移図</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../project_charter.html#id35">データベース</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">データベース設計</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">データベース全体ER図</a></li>
+<li class="toctree-l4"><a class="reference internal" href="template.html">[ テーブル名 ]</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id36">運用保守要求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../project_charter.html#id37">サーバ概念図</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../project_plan.html">プロジェクト計画</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_story/index.html">ユーザーストーリー 一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usecase/index.html">ユースケース 一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ddd/index.html">DDD（Domain-Driven Design）設計</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../screen/index.html">画面仕様</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">データベース設計</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">データベース全体ER図</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">概要</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">全体ER図</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">テーブル一覧</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">主要リレーションシップ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">データベース制約サマリー</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">インデックス戦略</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">拡張予定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">関連ドキュメント</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="template.html">[ テーブル名 ]</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../mail/index.html">メール定義書 一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch/index.html">バッチ処理設計</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mermaid-sample.html">Mermaid サンプル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../openapi-sample.html">OpenAPI サンプル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../restructuredtext-sample.html">サンプルドキュメント</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">設計書サンプル</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../project_charter.html">プロジェクト憲章</a></li>
+          <li class="breadcrumb-item"><a href="index.html">データベース設計</a></li>
+      <li class="breadcrumb-item active">データベース全体ER図</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/database/er.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="er">
+<h1>データベース全体ER図<a class="headerlink" href="#er" title="Link to this heading"></a></h1>
+<p><strong>最終更新</strong>: [ 更新日を記載 ]</p>
+<section id="id1">
+<h2>概要<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>このページでは、システム全体のデータベース構造をER図で表現し、テーブル間の関係性を明確に示します。</p>
+</section>
+<section id="id2">
+<h2>全体ER図<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<pre  class="mermaid">
+        erDiagram
+    users {
+        UUID id PK &quot;ユーザーID&quot;
+        VARCHAR email UK &quot;メールアドレス&quot;
+        VARCHAR password_hash &quot;パスワードハッシュ&quot;
+        VARCHAR status &quot;ステータス&quot;
+        TIMESTAMP last_login_at &quot;最終ログイン日時&quot;
+        TIMESTAMP created_at &quot;作成日時&quot;
+        TIMESTAMP updated_at &quot;更新日時&quot;
+    }
+
+    user_profiles {
+        UUID user_id FK &quot;ユーザーID&quot;
+        VARCHAR first_name &quot;名&quot;
+        VARCHAR last_name &quot;姓&quot;
+        VARCHAR postal_code &quot;郵便番号&quot;
+        VARCHAR prefecture &quot;都道府県&quot;
+        VARCHAR city &quot;市区町村&quot;
+        VARCHAR street_address &quot;番地以降&quot;
+        VARCHAR phone &quot;電話番号&quot;
+        TIMESTAMP created_at &quot;作成日時&quot;
+        TIMESTAMP updated_at &quot;更新日時&quot;
+    }
+
+    products {
+        UUID id PK &quot;商品ID&quot;
+        VARCHAR name &quot;商品名&quot;
+        DECIMAL price &quot;価格&quot;
+        INTEGER stock &quot;在庫数&quot;
+        VARCHAR status &quot;ステータス&quot;
+        TIMESTAMP created_at &quot;作成日時&quot;
+        TIMESTAMP updated_at &quot;更新日時&quot;
+    }
+
+    shopping_carts {
+        UUID id PK &quot;カートID&quot;
+        UUID user_id FK &quot;ユーザーID&quot;
+        TIMESTAMP expires_at &quot;有効期限&quot;
+        TIMESTAMP created_at &quot;作成日時&quot;
+        TIMESTAMP updated_at &quot;更新日時&quot;
+    }
+
+    cart_items {
+        UUID cart_id FK &quot;カートID&quot;
+        UUID product_id FK &quot;商品ID&quot;
+        INTEGER quantity &quot;数量&quot;
+        DECIMAL unit_price &quot;単価&quot;
+        DECIMAL subtotal &quot;小計&quot;
+        TIMESTAMP created_at &quot;作成日時&quot;
+        TIMESTAMP updated_at &quot;更新日時&quot;
+    }
+
+    users ||--o{ shopping_carts : &quot;has&quot;
+    users ||--|| user_profiles : &quot;has&quot;
+    shopping_carts ||--o{ cart_items : &quot;contains&quot;
+    cart_items }o--|| products : &quot;references&quot;
+    </pre></section>
+<section id="id3">
+<h2>テーブル一覧<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>テーブル名</p></th>
+<th class="head"><p>論理名</p></th>
+<th class="head"><p>主要用途</p></th>
+<th class="head"><p>詳細設計書</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>users</p></td>
+<td><p>ユーザー</p></td>
+<td><p>ユーザー情報を管理</p></td>
+<td><p><span class="xref std std-doc">users</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>user_profiles</p></td>
+<td><p>ユーザープロファイル</p></td>
+<td><p>ユーザーの詳細情報を管理</p></td>
+<td><p><span class="xref std std-doc">user_profiles</span></p></td>
+</tr>
+<tr class="row-even"><td><p>products</p></td>
+<td><p>商品</p></td>
+<td><p>商品マスタ情報を管理</p></td>
+<td><p><span class="xref std std-doc">products</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>shopping_carts</p></td>
+<td><p>ショッピングカート</p></td>
+<td><p>カート機能を管理</p></td>
+<td><p><span class="xref std std-doc">shopping_carts</span></p></td>
+</tr>
+<tr class="row-even"><td><p>cart_items</p></td>
+<td><p>カート商品明細</p></td>
+<td><p>カート内の商品明細を管理</p></td>
+<td><p><span class="xref std std-doc">cart_items</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h2>主要リレーションシップ<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p><strong>現在実装済み</strong>:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>親テーブル</p></th>
+<th class="head"><p>子テーブル</p></th>
+<th class="head"><p>関係性</p></th>
+<th class="head"><p>外部キー</p></th>
+<th class="head"><p>カーディナリティ</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>users</p></td>
+<td><p>shopping_carts</p></td>
+<td><p>ユーザーとカートの関係</p></td>
+<td><p>shopping_carts.user_id</p></td>
+<td><p>1:多（1人のユーザーが複数のカートを持つ）</p></td>
+</tr>
+<tr class="row-odd"><td><p>users</p></td>
+<td><p>user_profiles</p></td>
+<td><p>ユーザーとプロファイルの関係</p></td>
+<td><p>user_profiles.user_id</p></td>
+<td><p>1:1（1人のユーザーが1つのプロファイルを持つ）</p></td>
+</tr>
+<tr class="row-even"><td><p>shopping_carts</p></td>
+<td><p>cart_items</p></td>
+<td><p>カートと商品明細の関係</p></td>
+<td><p>cart_items.cart_id</p></td>
+<td><p>1:多（1つのカートが複数の商品明細を持つ）</p></td>
+</tr>
+<tr class="row-odd"><td><p>cart_items</p></td>
+<td><p>products</p></td>
+<td><p>商品明細と商品の関係</p></td>
+<td><p>cart_items.product_id</p></td>
+<td><p>1:多（1つの商品が複数の商品明細で使用）</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>将来実装予定</strong>:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>親テーブル</p></th>
+<th class="head"><p>子テーブル</p></th>
+<th class="head"><p>関係性</p></th>
+<th class="head"><p>外部キー</p></th>
+<th class="head"><p>カーディナリティ</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>users</p></td>
+<td><p>orders</p></td>
+<td><p>会員と注文の関係</p></td>
+<td><p>orders.member_id</p></td>
+<td><p>1:多（1人の会員が複数の注文を持つ）</p></td>
+</tr>
+<tr class="row-odd"><td><p>orders</p></td>
+<td><p>order_items</p></td>
+<td><p>注文と注文明細の関係</p></td>
+<td><p>order_items.order_id</p></td>
+<td><p>1:多（1つの注文が複数の明細を持つ）</p></td>
+</tr>
+<tr class="row-even"><td><p>products</p></td>
+<td><p>order_items</p></td>
+<td><p>商品と注文明細の関係</p></td>
+<td><p>order_items.product_id</p></td>
+<td><p>1:多（1つの商品が複数の明細で使用）</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id5">
+<h2>データベース制約サマリー<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p><strong>一意制約</strong>:</p>
+<ul class="simple">
+<li><p>[ テーブル名.カラム名 ]: [ 制約の説明 ]</p></li>
+</ul>
+<p><strong>外部キー制約</strong>:</p>
+<ul class="simple">
+<li><p>[ 子テーブル.外部キー ] → [ 親テーブル.主キー ]: [ 制約の説明 ]</p></li>
+</ul>
+<p><strong>チェック制約</strong>:</p>
+<ul class="simple">
+<li><p>[ テーブル名.カラム名 ]: [ 許可される値の説明 ]</p></li>
+</ul>
+</section>
+<section id="id6">
+<h2>インデックス戦略<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p><strong>高頻度検索用インデックス</strong>:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>インデックス名</p></th>
+<th class="head"><p>対象テーブル</p></th>
+<th class="head"><p>対象カラム</p></th>
+<th class="head"><p>用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>[ インデックス名 ]</p></td>
+<td><p>[ テーブル名 ]</p></td>
+<td><p>[ カラム名 ]</p></td>
+<td><p>[ 用途説明 ]</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>複合インデックス</strong>:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>インデックス名</p></th>
+<th class="head"><p>対象テーブル</p></th>
+<th class="head"><p>対象カラム</p></th>
+<th class="head"><p>用途</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>[ インデックス名 ]</p></td>
+<td><p>[ テーブル名 ]</p></td>
+<td><p>[ カラム名, カラム名 ]</p></td>
+<td><p>[ 用途説明 ]</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id7">
+<h2>拡張予定<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<p><strong>フェーズ2（商品・注文機能）</strong>:</p>
+<ul class="simple">
+<li><p><strong>商品テーブル</strong>: 商品マスタ情報の管理</p></li>
+<li><p><strong>注文テーブル</strong>: 注文情報の管理</p></li>
+<li><p><strong>注文明細テーブル</strong>: 注文商品詳細の管理</p></li>
+<li><p><strong>カート機能</strong>: 一時的な商品保持</p></li>
+</ul>
+<p><strong>フェーズ3（決済・配送機能）</strong>:</p>
+<ul class="simple">
+<li><p><strong>決済テーブル</strong>: 決済履歴の管理</p></li>
+<li><p><strong>配送テーブル</strong>: 配送状況管理</p></li>
+<li><p><strong>配送先テーブル</strong>: 複数配送先の管理</p></li>
+</ul>
+<p><strong>フェーズ4（拡張機能）</strong>:</p>
+<ul class="simple">
+<li><p><strong>レビューテーブル</strong>: 商品レビュー機能</p></li>
+<li><p><strong>ポイントテーブル</strong>: ポイント制度</p></li>
+<li><p><strong>クーポンテーブル</strong>: 割引クーポン機能</p></li>
+<li><p><strong>お気に入りテーブル</strong>: ウィッシュリスト機能</p></li>
+</ul>
+</section>
+<section id="id8">
+<h2>関連ドキュメント<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="template.html"><span class="doc">[ テーブル名 ]</span></a>: データベーステーブル設計テンプレート</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="データベース設計" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="template.html" class="btn btn-neutral float-right" title="[ テーブル名 ]" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MasaruFukazawa.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

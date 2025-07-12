@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>プロジェクト計画 &mdash; 設計書サンプル  ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=c033477b"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="ユーザーストーリー 一覧" href="user_story/index.html" />
+    <link rel="prev" title="プロジェクト憲章" href="project_charter.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            設計書サンプル
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="project_charter.html">プロジェクト憲章</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id3">サービス・システム名</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id4">ステークホルダー定義</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id5">ビジョン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id14">システム概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id15">システム利用ユーザ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id16">システム化対応範囲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id17">成功の基準</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id21">制約</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id26">投資利益率</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="project_charter.html#id27">プロジェクト計画</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">プロジェクト計画</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">製品の目的</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">履歴</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">リリース基準</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">目標</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">チーム編成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">会議体について</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">コミュニケーションツール</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">ドキュメント</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">開発ツール</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">インフラ構築環境</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">スケジュール概要</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">リスク</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id28">ユーザーストーリー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id29">業務フロー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id30">ドメインモデル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id31">ユースケース</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id32">機能要求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id33">非機能要求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id34">画面一覧 / 画面遷移図</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id35">データベース</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id36">運用保守要求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="project_charter.html#id37">サーバ概念図</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">プロジェクト計画</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id3">製品の目的</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">履歴</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">リリース基準</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">目標</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">製品の目標</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">プロジェクトの目標</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">チームの目標</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">組織の目標</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">チーム編成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">会議体について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">コミュニケーションツール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id14">ドキュメント</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id15">開発ツール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id16">インフラ構築環境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id17">スケジュール概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id18">リスク</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_story/index.html">ユーザーストーリー 一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usecase/index.html">ユースケース 一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ddd/index.html">DDD（Domain-Driven Design）設計</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screen/index.html">画面仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database/index.html">データベース設計</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mail/index.html">メール定義書 一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch/index.html">バッチ処理設計</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mermaid-sample.html">Mermaid サンプル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="openapi-sample.html">OpenAPI サンプル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="restructuredtext-sample.html">サンプルドキュメント</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">設計書サンプル</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="project_charter.html">プロジェクト憲章</a></li>
+      <li class="breadcrumb-item active">プロジェクト計画</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/project_plan.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>プロジェクト計画<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p><strong>最終更新</strong>: [ 更新日を記載 ]</p>
+<nav class="contents local" id="id2">
+<p class="topic-title">目次</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id3" id="id19">製品の目的</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id20">履歴</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id21">リリース基準</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id22">目標</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id7" id="id23">製品の目標</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id24">プロジェクトの目標</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id25">チームの目標</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id26">組織の目標</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id11" id="id27">チーム編成</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id28">会議体について</a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id29">コミュニケーションツール</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id30">ドキュメント</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id31">開発ツール</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id32">インフラ構築環境</a></p></li>
+<li><p><a class="reference internal" href="#id17" id="id33">スケジュール概要</a></p></li>
+<li><p><a class="reference internal" href="#id18" id="id34">リスク</a></p></li>
+</ul>
+</nav>
+<section id="id3">
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">製品の目的</a><a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id20" role="doc-backlink">履歴</a><a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id21" role="doc-backlink">リリース基準</a><a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id22" role="doc-backlink">目標</a><a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<section id="id7">
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">製品の目標</a><a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">プロジェクトの目標</a><a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+</section>
+<section id="id9">
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">チームの目標</a><a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+</section>
+<section id="id10">
+<h3><a class="toc-backref" href="#id26" role="doc-backlink">組織の目標</a><a class="headerlink" href="#id10" title="Link to this heading"></a></h3>
+</section>
+</section>
+<section id="id11">
+<h2><a class="toc-backref" href="#id27" role="doc-backlink">チーム編成</a><a class="headerlink" href="#id11" title="Link to this heading"></a></h2>
+</section>
+<section id="id12">
+<h2><a class="toc-backref" href="#id28" role="doc-backlink">会議体について</a><a class="headerlink" href="#id12" title="Link to this heading"></a></h2>
+</section>
+<section id="id13">
+<h2><a class="toc-backref" href="#id29" role="doc-backlink">コミュニケーションツール</a><a class="headerlink" href="#id13" title="Link to this heading"></a></h2>
+</section>
+<section id="id14">
+<h2><a class="toc-backref" href="#id30" role="doc-backlink">ドキュメント</a><a class="headerlink" href="#id14" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>ドキュメント名</p></li>
+<li><p>ドキュメント保管場所</p></li>
+</ul>
+</section>
+<section id="id15">
+<h2><a class="toc-backref" href="#id31" role="doc-backlink">開発ツール</a><a class="headerlink" href="#id15" title="Link to this heading"></a></h2>
+</section>
+<section id="id16">
+<h2><a class="toc-backref" href="#id32" role="doc-backlink">インフラ構築環境</a><a class="headerlink" href="#id16" title="Link to this heading"></a></h2>
+</section>
+<section id="id17">
+<h2><a class="toc-backref" href="#id33" role="doc-backlink">スケジュール概要</a><a class="headerlink" href="#id17" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>主要なマイルストーンとそのスケジュール</p></li>
+<li><p>作業分解図(WBS: Work Breakdown Structure)</p>
+<ul>
+<li><p>複数のタスクの依存関係、期間、所有者を示したタスクの構造図</p></li>
+<li><p>プロジェクトが進むごとに、WBSを充実させる</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id18">
+<h2><a class="toc-backref" href="#id34" role="doc-backlink">リスク</a><a class="headerlink" href="#id18" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>リスク1</p></li>
+<li><p>リスク2</p></li>
+<li><p>リスク3</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="project_charter.html" class="btn btn-neutral float-left" title="プロジェクト憲章" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="user_story/index.html" class="btn btn-neutral float-right" title="ユーザーストーリー 一覧" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MasaruFukazawa.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
