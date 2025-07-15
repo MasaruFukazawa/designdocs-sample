@@ -34,6 +34,10 @@
 
 ## セットアップ
 
+設計ドキュメントの作成と管理を始めるための基本的なセットアップ手順です。
+※ Github MCP Server のセットアップは、参考資料のリンクを参照してください。
+
+
 ```bash
 # リポジトリのクローン
 git clone https://github.com/MasaruFukazawa/designdocs-sample.git
