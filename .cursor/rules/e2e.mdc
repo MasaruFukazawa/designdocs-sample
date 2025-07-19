@@ -1,0 +1,351 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# E2Eテスト設計ルール
+
+このプロジェクトでE2Eテストを設計・実装する際の標準ルールです。
+
+## 基本ルール
+
+### 1. ファイル保存場所
+- **E2Eテスト設計**: [docs/design/source/test/e2e/](mdc:docs/design/source/test/e2e) ディレクトリに保存
+- **テンプレート**: [docs/design/source/test/e2e/template.rst](mdc:docs/design/source/test/e2e/template.rst)
+- **インデックス**: [docs/design/source/test/e2e/index.rst](mdc:docs/design/source/test/e2e/index.rst)
+
+### 2. テンプレートの使用
+- **ファイル名**: `{機能名}_e2e_test.rst` 形式
+  - 例: `user_registration_e2e_test.rst`, `shopping_cart_e2e_test.rst`
+- **テストID**: `E2E_{機能分類}_{具体テスト}` 形式
+  - 例: `E2E_USER_REGISTRATION`, `E2E_CART_CHECKOUT`
+
+### 3. インデックスファイルへの追加
+- [docs/design/source/test/e2e/index.rst](mdc:docs/design/source/test/e2e/index.rst) にリンクを追加
+- 機能分類ごとにグループ化
+- テンプレートファイルは最後に配置
+
+### 4. 用語・設計の統一
+- 新しい用語は [docs/design/source/domain_model.rst](mdc:docs/design/source/domain_model.rst) に定義を追加
+- 専門用語、システム固有の概念、業務用語は必ず定義
+- ドメインモデルの用語と一貫性を保つ
+
+## 設計原則
+
+### 基本原則
+1. **ユーザーストーリー駆動**
+   - 各E2Eテストはユーザーストーリーに基づいて設計
+   - ユーザーの視点からの機能検証を重視
+   - 受け入れ条件との整合性を確保
+
+2. **エンドツーエンド性**
+   - 実際のユーザー操作を模倣
+   - システム全体の統合を検証
+   - 外部依存を含めた完全なフロー確認
+
+3. **独立性**
+   - 各テストは他のテストに依存しない
+   - テストデータの独立性確保
+   - テスト順序に依存しない設計
+
+4. **再現性**
+   - 同じ条件で同じ結果が得られる
+   - テスト環境の一貫性確保
+   - 不確実性の排除
+
+5. **メンテナンス性**
+   - テストコードの保守が容易
+   - 変更影響範囲の最小化
+   - 再利用可能なコンポーネント設計
+
+### テストシナリオ設計原則
+1. **Given-When-Then形式**
+   - 前提条件の明確化（Given）
+   - ユーザーアクションの具体化（When）
+   - 期待結果の詳細化（Then）
+
+2. **データ設計原則**
+   - テストデータの分離
+   - 環境非依存のデータ設計
+   - クリーンアップ方針の明確化
+
+3. **エラーケース網羅**
+   - 境界値テストの包含
+   - 異常系シナリオの網羅
+   - リカバリーフローの確認
+
+## 実装方針
+
+### テストフレームワーク
+- **標準フレームワーク**: Playwright
+- **テスト言語**: Python
+- **アサーションライブラリ**: pytest
+- **サポートブラウザ**: Chromium, Firefox, WebKit
+
+### ディレクトリ構造
+```
+tests/
+├── e2e/
+│   ├── pages/              # Page Objectクラス
+│   │   └── [機能名]_page.py
+│   ├── test_data/         # テストデータ
+│   │   └── [機能名]_data.py
+│   └── tests/             # テストケース
+│       └── test_[機能名].py
+├── conftest.py            # pytest設定
+└── pytest.ini            # pytest設定
+```
+
+### Page Objectパターン
+```python
+# pages/base_page.py
+from playwright.sync_api import Page
+
+class BasePage:
+    def __init__(self, page: Page):
+        self.page = page
+        self.base_url = "http://localhost:3000"
+
+    def goto(self, path: str = "/"):
+        self.page.goto(f"{self.base_url}{path}")
+
+    def wait_for_load(self):
+        self.page.wait_for_load_state("networkidle")
+
+# pages/[機能名]_page.py
+from .base_page import BasePage
+
+class [機能名]Page(BasePage):
+    # セレクター定義
+    _selectors = {
+        "component": '[data-testid="component-name"]',
+        "action_button": '[data-testid="action-name-button"]',
+        "form_field": '[data-testid="form-field-name"]'
+    }
+
+    def __init__(self, page: Page):
+        super().__init__(page)
+        
+    def do_action(self):
+        self.page.click(self._selectors["action_button"])
+        self.wait_for_load()
+
+    def check_state(self) -> bool:
+        return self.page.is_visible(self._selectors["component"])
+
+    def get_error_message(self) -> str:
+        return self.page.text_content(self._selectors["error_message"])
+```
+
+### テストデータ管理
+```python
+# test_data/[機能名]_data.py
+from dataclasses import dataclass
+from typing import Dict, Any
+
+@dataclass
+class TestData:
+    valid: Dict[str, Any]
+    invalid: Dict[str, Any]
+
+test_data = TestData(
+    valid={
+        # 正常系テストデータ
+    },
+    invalid={
+        # 異常系テストデータ
+    }
+)
+```
+
+### セレクター戦略
+1. **優先順位**:
+   - data-testid（最優先）
+   - アクセシビリティ属性（aria-*）
+   - セマンティックHTML要素
+   - クラス名（最終手段）
+
+2. **命名規則**:
+   ```html
+   <!-- コンポーネント特定用 -->
+   data-testid="component-name"
+   
+   <!-- アクション要素用 -->
+   data-testid="action-name-button"
+   
+   <!-- フォーム要素用 -->
+   data-testid="form-field-name"
+   ```
+
+### テストケース構造
+```python
+# tests/test_[機能名].py
+import pytest
+from playwright.sync_api import Page
+from pages.[機能名]_page import [機能名]Page
+from test_data.[機能名]_data import test_data
+
+@pytest.fixture
+def target_page(page: Page) -> [機能名]Page:
+    page_obj = [機能名]Page(page)
+    page_obj.goto()
+    return page_obj
+
+def test_正常系_期待される動作(target_page: [機能名]Page):
+    # Given
+    target_page.setup_test_data(test_data.valid)
+
+    # When
+    target_page.do_action()
+
+    # Then
+    assert target_page.check_state()
+    assert target_page.get_results() == expected_results
+
+def test_異常系_エラーケース(target_page: [機能名]Page):
+    # Given
+    target_page.setup_test_data(test_data.invalid)
+
+    # When
+    target_page.do_action()
+
+    # Then
+    assert target_page.get_error_message() == "期待されるエラー"
+```
+
+### CI/CD設定
+```yaml
+# .github/workflows/e2e.yml
+name: E2E Tests
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Install Playwright browsers
+        run: playwright install
+      - name: Run E2E tests
+        run: pytest tests/e2e
+```
+
+## 品質チェック
+
+### テストケース作成時
+- [ ] ユーザーストーリーと対応している
+- [ ] テストシナリオが具体的
+- [ ] セレクターが適切に定義されている
+- [ ] エラーケースが網羅されている
+- [ ] パフォーマンスを考慮している
+
+### テストコード作成時
+- [ ] Page Objectパターンを使用している
+- [ ] テストデータが分離されている
+- [ ] アサーションが明確
+- [ ] エラーメッセージが具体的
+- [ ] クリーンアップが適切
+
+### レビューポイント
+- [ ] テストの独立性が保たれている
+- [ ] 再現性が確保されている
+- [ ] エラーハンドリングが適切
+- [ ] セキュリティ要件を満たしている
+- [ ] メンテナンス性が考慮されている
+
+## 作業手順
+
+### 1. インプット情報の収集
+- GitHubのissueの内容確認
+- [docs/design/source/user_story/](mdc:docs/design/source/user_story) のユーザーストーリー参照
+  - 特に受け入れ条件（Given-When-Then）の確認
+  - ユーザーの操作シナリオの把握
+- [docs/design/source/usecase/](mdc:docs/design/source/usecase) のユースケース参照
+  - 基本フロー・代替フローの確認
+  - エラーケースの特定
+- [docs/design/source/screen/](mdc:docs/screen/diagram) の画面遷移図確認
+  - テスト対象の画面フローの把握
+  - 画面要素のセレクター情報の収集
+
+### 2. テストシナリオの設計
+- **シナリオの特定**
+  - ユーザーストーリーの受け入れ条件をベースにシナリオ作成
+  - 正常系・異常系の洗い出し
+  - 境界値ケースの検討
+
+- **前提条件の定義**
+  - テスト環境要件の特定
+  - 必要なテストデータの洗い出し
+  - 外部システム連携の要件確認
+
+- **期待結果の定義**
+  - 画面表示の期待値
+  - データ状態の期待値
+  - エラーメッセージの期待値
+
+### 3. テスト設計書の作成
+- テンプレートをコピーして新規ファイル作成
+- インデックスファイルへのリンク追加
+- 各セクションの詳細化
+  - テストID・概要の記述
+  - シナリオの詳細記述
+  - 前提条件・期待結果の記述
+
+### 4. テストコードの実装
+- **Page Objectの作成**
+  - 画面操作メソッドの実装
+  - セレクターの定義
+  - 状態確認メソッドの実装
+
+- **テストデータの準備**
+  - テストデータクラスの作成
+  - フィクスチャーの実装
+  - クリーンアップ処理の実装
+
+- **テストケースの実装**
+  - Given-When-Then構造での実装
+  - アサーションの実装
+  - エラーケースの実装
+
+### 5. テストの実行と検証
+- ローカル環境でのテスト実行
+- CI環境でのテスト実行
+- テスト結果の確認と必要な修正
+
+### 6. レビュー準備
+- コードのクリーンアップ
+- コメントの追加
+- テスト実行手順のドキュメント化
+
+### 7. Git運用
+- コミットメッセージの作成
+  ```
+  test(e2e): [機能名]のE2Eテスト追加
+
+  - シナリオ: [主要なテストシナリオ]
+  - 変更内容:
+    - Page Object実装
+    - テストケース実装
+    - テストデータ追加
+  ```
+- プルリクエストの作成
+- レビュー依頼
+
+## 関連ドキュメント
+- **ワークフロー**: [.cursor/rules/workflow.mdc](mdc:.cursor/rules/workflow.mdc)
+- **ユーザーストーリー**: [.cursor/rules/user_story.mdc](mdc:.cursor/rules/user_story.mdc)
+- **ドメインモデル**: [.cursor/rules/domain_model.mdc](mdc:.cursor/rules/domain_model.mdc)
+- **ユースケース**: [.cursor/rules/usecase.mdc](mdc:.cursor/rules/usecase.mdc)
+- **DDD設計**: [.cursor/rules/ddd.mdc](mdc:.cursor/rules/ddd.mdc)
+- **画面遷移図**: [.cursor/rules/screen.mdc](mdc:.cursor/rules/screen.mdc)
+- **データベース設計**: [.cursor/rules/database.mdc](mdc:.cursor/rules/database.mdc)
+- **メール定義**: [.cursor/rules/mail.mdc](mdc:.cursor/rules/mail.mdc)
+- **バッチ処理**: [.cursor/rules/batch.mdc](mdc:.cursor/rules/batch.mdc)
+- **Git運用**: [.cursor/rules/git.mdc](mdc:.cursor/rules/git.mdc)
+- **Mermaid記法**: [.cursor/rules/mermaid.mdc](mdc:.cursor/rules/mermaid.mdc)

@@ -138,18 +138,18 @@ feat(user-story): [機能名] - [概要]
 3. 重要度順に並べ替え
 4. `template` は最後に維持
 
-## 関連ルール
-
-- [ドメインモデル作成ルール](mdc:.cursor/rules/domain_model.mdc)
-- [ユースケース作成ルール](mdc:.cursor/rules/usecase.mdc)
-- [プロジェクト設計ワークフロー](mdc:.cursor/rules/workflow.mdc)
-- [画面遷移図作成ルール](mdc:.cursor/rules/screen.mdc)
-- [データベース設計ルール](mdc:.cursor/rules/database.mdc)
-- [DDD設計ルール](mdc:.cursor/rules/ddd.mdc)
-- [バッチ処理設計ルール](mdc:.cursor/rules/batch.mdc)
-- [メール定義書作成ルール](mdc:.cursor/rules/mail.mdc)
-- [Git運用ルール](mdc:.cursor/rules/git.mdc)
-- [Mermaid記法ルール](mdc:.cursor/rules/mermaid.mdc)
+## 関連ドキュメント
+- **ワークフロー**: [.cursor/rules/workflow.mdc](mdc:.cursor/rules/workflow.mdc)
+- **ドメインモデル**: [.cursor/rules/domain_model.mdc](mdc:.cursor/rules/domain_model.mdc)
+- **ユースケース**: [.cursor/rules/usecase.mdc](mdc:.cursor/rules/usecase.mdc)
+- **DDD設計**: [.cursor/rules/ddd.mdc](mdc:.cursor/rules/ddd.mdc)
+- **画面遷移図**: [.cursor/rules/screen.mdc](mdc:.cursor/rules/screen.mdc)
+- **データベース設計**: [.cursor/rules/database.mdc](mdc:.cursor/rules/database.mdc)
+- **メール定義**: [.cursor/rules/mail.mdc](mdc:.cursor/rules/mail.mdc)
+- **E2Eテスト**: [.cursor/rules/e2e.mdc](mdc:.cursor/rules/e2e.mdc)
+- **バッチ処理**: [.cursor/rules/batch.mdc](mdc:.cursor/rules/batch.mdc)
+- **Git運用**: [.cursor/rules/git.mdc](mdc:.cursor/rules/git.mdc)
+- **Mermaid記法**: [.cursor/rules/mermaid.mdc](mdc:.cursor/rules/mermaid.mdc)
 
 ## 設計原則
 

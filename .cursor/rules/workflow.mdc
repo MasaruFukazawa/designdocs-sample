@@ -32,17 +32,104 @@ alwaysApply: true
 - アクターとシステムの相互作用を定義
 - [docs/design/source/usecase/index.rst](mdc:docs/design/source/usecase/index.rst) への索引追加
 
-### 5. 画面遷移図作成
+### 5. DDD設計
+- **集約の定義**
+  - ユースケースの操作フローに基づく境界の特定
+  - トランザクション一貫性の範囲の決定
+  - 集約間の参照関係の設計
+
+- **エンティティと値オブジェクト**
+  - IDによる識別が必要なオブジェクトの特定
+  - 不変条件を持つ値オブジェクトの抽出
+  - ライフサイクルの定義
+
+- **ドメインサービス**
+  - 複数の集約にまたがる操作の特定
+  - ビジネスルールの実装方針
+  - 外部システム連携の設計
+
+- **リポジトリ**
+  - 集約単位での永続化方針
+  - 検索条件と取得方法の設計
+  - トランザクション境界の定義
+
+- **ドキュメント作成**
+  - [docs/design/source/ddd/template.rst](mdc:docs/design/source/ddd/template.rst) をベースに作成
+  - 集約とエンティティの関係図の作成
+  - [docs/design/source/ddd/index.rst](mdc:docs/design/source/ddd/index.rst) にリンクを追加
+
+### 6. 画面遷移図作成
 - ユースケースから画面遷移を設計
 - [docs/design/source/screen/diagram.rst](mdc:docs/design/source/screen/diagram.rst) をベースに作成
 - 画面名はドメインモデルと統一
 - [docs/design/source/screen/index.rst](mdc:docs/design/source/screen/index.rst) にリンクを追加
 
-### 6. データベース設計
+### 7. データベース設計
 - ER図の作成・更新
 - テーブル設計書の作成
 - データ整合性とビジネスルールの定義
 - [docs/design/source/database/index.rst](mdc:docs/design/source/database/index.rst) に追加
+
+### 8. メール設計
+- **作成判断**
+  - ユーザーストーリーで通知要件がある場合
+  - ユースケースでメール送信が含まれる場合
+  - システムからの自動通知が必要な場合
+
+- **設計手順**
+  1. ユーザーストーリーから通知要件を確認
+  2. ユースケースの基本フロー・代替フローからメール送信タイミングを特定
+  3. メールの送信条件と内容を定義
+  4. テンプレート変数を特定
+  5. エラーケースの通知要件を確認
+
+- **ドキュメント作成**
+  - [docs/design/source/mail/template.rst](mdc:docs/design/source/mail/template.rst) をベースに作成
+  - メールタイトルと目的を定義
+  - 送信条件とテンプレートを記述
+  - [docs/design/source/mail/index.rst](mdc:docs/design/source/mail/index.rst) にリンクを追加
+
+### 9. バッチ処理設計
+- **作成判断**
+  - ユーザーストーリーで定期実行要件がある場合
+  - データの一括処理が必要な場合
+  - システムメンテナンス要件がある場合
+  - 外部システムとの定期連携が必要な場合
+
+- **設計手順**
+  1. ユーザーストーリーから処理要件を確認
+  2. ユースケースの基本フロー・代替フローから処理内容を特定
+  3. 実行タイミングと頻度を定義
+  4. 処理単位とトランザクション境界を設計
+  5. エラー時の動作と復旧手順を定義
+  6. パフォーマンス要件と監視要件を設定
+
+- **ドキュメント作成**
+  - [docs/design/source/batch/template.rst](mdc:docs/design/source/batch/template.rst) をベースに作成
+  - バッチ処理IDと目的を定義
+  - 処理フローとエラーハンドリングを記述
+  - [docs/design/source/batch/index.rst](mdc:docs/design/source/batch/index.rst) にリンクを追加
+
+### 10. E2Eテスト設計
+- **作成判断**
+  - ユーザーストーリーの受け入れ条件に基づく判断
+  - 複数画面をまたぐ操作フローの場合
+  - 重要なビジネスフローの場合
+  - データの永続化を伴う操作の場合
+
+- **設計手順**
+  1. ユーザーストーリーの受け入れ条件を確認
+  2. ユースケースの基本フロー・代替フローを確認
+  3. 画面遷移図から具体的な操作フローを特定
+  4. テストシナリオをGiven-When-Then形式で設計
+  5. 必要なテストデータを定義
+  6. エラーケースを特定
+
+- **ドキュメント作成**
+  - [docs/design/source/test/e2e/template.rst](mdc:docs/design/source/test/e2e/template.rst) をベースに作成
+  - テストIDと概要を定義
+  - テストシナリオを記述
+  - [docs/design/source/test/e2e/index.rst](mdc:docs/design/source/test/e2e/index.rst) にリンクを追加
 
 ## ファイル構造
 
@@ -58,14 +145,27 @@ docs/design/source/
 │   ├── diagram.rst    # 図
 │   ├── template.rst   # テンプレート
 │   └── *.rst         # 個別ユースケース
+├── ddd/                # DDD設計
+│   ├── index.rst      # 一覧
+│   ├── template.rst   # テンプレート
+│   └── *.rst         # 個別DDD設計
 ├── screen/             # 画面設計
 │   ├── index.rst      # 一覧
 │   ├── diagram.rst    # 画面遷移図
 │   └── *.rst         # 個別画面定義
-└── database/           # データベース設計
+├── database/           # データベース設計
+│   ├── index.rst      # 一覧
+│   ├── er.rst        # ER図
+│   └── template.rst   # テンプレート
+├── test/              # テスト設計
+│   └── e2e/          # E2Eテスト
+│       ├── index.rst  # 一覧
+│       ├── template.rst # テンプレート
+│       └── *.rst     # 個別E2Eテスト
+└── mail/              # メール設計
     ├── index.rst      # 一覧
-    ├── er.rst        # ER図
-    └── template.rst   # テンプレート
+    ├── template.rst   # テンプレート
+    └── *.rst         # 個別メール定義
 ```
 
 ## Git運用
@@ -74,15 +174,21 @@ docs/design/source/
 1. ユーザーストーリー作成後
 2. ドメインモデル更新後
 3. ユースケース作成後
-4. 画面遷移図作成後
-5. データベース設計後
+4. DDD設計後
+5. 画面遷移図作成後
+6. データベース設計後
+7. メール設計後
+8. E2Eテスト設計後
 
 ### コミットメッセージ形式
 - ユーザーストーリー: `feat(user-story): [機能名] - [概要]`
 - ドメインモデル: `feat(domain): [用語追加/クラス図更新] - [概要]`
 - ユースケース: `feat(usecase): [機能名] - [概要]`
+- DDD設計: `feat(ddd): [集約名/エンティティ名] - [概要]`
 - 画面設計: `feat(screen): [画面名] - [概要]`
 - データベース設計: `feat(db): [テーブル追加/ER図更新] - [概要]`
+- メール設計: `feat(mail): [メール名] - [概要]`
+- E2Eテスト: `feat(e2e): [機能名] - [概要]`
 
 ## 品質チェック
 
