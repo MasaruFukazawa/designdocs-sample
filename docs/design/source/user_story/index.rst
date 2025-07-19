@@ -7,4 +7,3 @@
    :maxdepth: 1
 
    template
-   issue_2_member_registration

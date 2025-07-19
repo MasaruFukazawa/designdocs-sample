@@ -1,12 +1,8 @@
-メール定義書 一覧
+メール定義書
 ============================================
 
-**最終更新**: [ 更新日を記載 ]
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
 
-.. list-table::
-   :header-rows: 1
-
-   * - メールタイトル
-     - リンク
-   * - テンプレート
-     - :doc:`template`
+   template
